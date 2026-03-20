@@ -26,13 +26,42 @@ export const allMusiciansQuery = groq`
 `;
 
 export const allAlbumsQuery = groq`
-  *[_type == "album"] | order(featured desc, order asc)
+  *[_type == "album"] | order(featured desc, order asc) {
+    _id,
+    title,
+    slug,
+    releaseYear,
+    albumType,
+    description,
+    tracklist,
+    credits,
+    featured,
+    order,
+    coverImage {
+      asset -> { _id, url }
+    },
+    buyLinks,
+    pressQuotes
+  }
 `;
 
 export const albumBySlugQuery = groq`
   *[_type == "album" && slug.current == $slug][0] {
-    ...,
-    pressQuotes[]
+    _id,
+    title,
+    slug,
+    releaseYear,
+    albumType,
+    description,
+    tracklist,
+    credits,
+    featured,
+    order,
+    coverImage {
+      asset -> { _id, url }
+    },
+    buyLinks,
+    pressQuotes
   }
 `;
 

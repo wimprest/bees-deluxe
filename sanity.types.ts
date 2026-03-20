@@ -376,32 +376,29 @@ export type AllMusiciansQueryResult = Array<{
 
 // Source: src/lib/queries.ts
 // Variable: allAlbumsQuery
-// Query: *[_type == "album"] | order(featured desc, order asc)
+// Query: *[_type == "album"] | order(featured desc, order asc) {    _id,    title,    slug,    releaseYear,    albumType,    description,    tracklist,    credits,    featured,    order,    coverImage {      asset -> { _id, url }    },    buyLinks,    pressQuotes  }
 export type AllAlbumsQueryResult = Array<{
   _id: string;
-  _type: "album";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  releaseYear?: number;
-  coverImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  albumType?: "album" | "ep" | "single";
-  description?: string;
-  tracklist?: Array<{
+  title: string | null;
+  slug: Slug | null;
+  releaseYear: number | null;
+  albumType: "album" | "ep" | "single" | null;
+  description: string | null;
+  tracklist: Array<{
     trackNumber?: number;
     title?: string;
     _key: string;
-  }>;
-  credits?: string;
-  buyLinks?: Array<{
+  }> | null;
+  credits: string | null;
+  featured: boolean | null;
+  order: number | null;
+  coverImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+  } | null;
+  buyLinks: Array<{
     platform?:
       | "Amazon"
       | "Apple Music"
@@ -411,56 +408,7 @@ export type AllAlbumsQueryResult = Array<{
       | "Spotify";
     url?: string;
     _key: string;
-  }>;
-  pressQuotes?: Array<{
-    quote?: string;
-    attribution?: string;
-    publication?: string;
-    publicationUrl?: string;
-    _key: string;
-  }>;
-  order?: number;
-  featured?: boolean;
-}>;
-
-// Source: src/lib/queries.ts
-// Variable: albumBySlugQuery
-// Query: *[_type == "album" && slug.current == $slug][0] {    ...,    pressQuotes[]  }
-export type AlbumBySlugQueryResult = {
-  _id: string;
-  _type: "album";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  releaseYear?: number;
-  coverImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  albumType?: "album" | "ep" | "single";
-  description?: string;
-  tracklist?: Array<{
-    trackNumber?: number;
-    title?: string;
-    _key: string;
-  }>;
-  credits?: string;
-  buyLinks?: Array<{
-    platform?:
-      | "Amazon"
-      | "Apple Music"
-      | "Bandcamp"
-      | "iTunes"
-      | "PayPal CD"
-      | "Spotify";
-    url?: string;
-    _key: string;
-  }>;
+  }> | null;
   pressQuotes: Array<{
     quote?: string;
     attribution?: string;
@@ -468,8 +416,50 @@ export type AlbumBySlugQueryResult = {
     publicationUrl?: string;
     _key: string;
   }> | null;
-  order?: number;
-  featured?: boolean;
+}>;
+
+// Source: src/lib/queries.ts
+// Variable: albumBySlugQuery
+// Query: *[_type == "album" && slug.current == $slug][0] {    _id,    title,    slug,    releaseYear,    albumType,    description,    tracklist,    credits,    featured,    order,    coverImage {      asset -> { _id, url }    },    buyLinks,    pressQuotes  }
+export type AlbumBySlugQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  releaseYear: number | null;
+  albumType: "album" | "ep" | "single" | null;
+  description: string | null;
+  tracklist: Array<{
+    trackNumber?: number;
+    title?: string;
+    _key: string;
+  }> | null;
+  credits: string | null;
+  featured: boolean | null;
+  order: number | null;
+  coverImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+  } | null;
+  buyLinks: Array<{
+    platform?:
+      | "Amazon"
+      | "Apple Music"
+      | "Bandcamp"
+      | "iTunes"
+      | "PayPal CD"
+      | "Spotify";
+    url?: string;
+    _key: string;
+  }> | null;
+  pressQuotes: Array<{
+    quote?: string;
+    attribution?: string;
+    publication?: string;
+    publicationUrl?: string;
+    _key: string;
+  }> | null;
 } | null;
 
 // Source: src/lib/queries.ts
@@ -562,8 +552,8 @@ declare module "@sanity/client" {
     '\n  *[_type == "show" && date >= now()] | order(date asc) [0...$limit]\n': UpcomingShowsQueryResult;
     '\n  *[_type == "show"] | order(date asc)\n': AllShowsQueryResult;
     '\n  *[_type == "musician"] | order(isCurrentMember desc, order asc) {\n    _id,\n    name,\n    role,\n    bio,\n    isCurrentMember,\n    order,\n    photo {\n      asset -> {\n        _id,\n        url\n      }\n    }\n  }\n': AllMusiciansQueryResult;
-    '\n  *[_type == "album"] | order(featured desc, order asc)\n': AllAlbumsQueryResult;
-    '\n  *[_type == "album" && slug.current == $slug][0] {\n    ...,\n    pressQuotes[]\n  }\n': AlbumBySlugQueryResult;
+    '\n  *[_type == "album"] | order(featured desc, order asc) {\n    _id,\n    title,\n    slug,\n    releaseYear,\n    albumType,\n    description,\n    tracklist,\n    credits,\n    featured,\n    order,\n    coverImage {\n      asset -> { _id, url }\n    },\n    buyLinks,\n    pressQuotes\n  }\n': AllAlbumsQueryResult;
+    '\n  *[_type == "album" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    releaseYear,\n    albumType,\n    description,\n    tracklist,\n    credits,\n    featured,\n    order,\n    coverImage {\n      asset -> { _id, url }\n    },\n    buyLinks,\n    pressQuotes\n  }\n': AlbumBySlugQueryResult;
     '\n  *[_type == "pressQuote"] | order(order asc)\n': AllPressQuotesQueryResult;
     '\n  *[_type == "video"] | order(featured desc, order asc)\n': AllVideosQueryResult;
     '\n  *[_type == "photo"] | order(order asc)\n': AllPhotosQueryResult;
