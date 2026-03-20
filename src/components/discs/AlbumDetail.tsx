@@ -62,49 +62,7 @@ export function AlbumDetail({ album, onClose }: AlbumDetailProps) {
       )}
 
       <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
-        {/* Left column: cover + buy links */}
-        <div className="lg:w-[45%]">
-          <Image
-            src={`/images/albums/${slug}.jpg`}
-            alt={album.title ?? "Album cover"}
-            width={600}
-            height={600}
-            className="aspect-square w-full object-cover"
-          />
-
-          {isEpOrSingle && (
-            <p className="mt-2 text-xs uppercase text-brand-muted">
-              {album.albumType === "ep" ? "EP" : "Single"}
-            </p>
-          )}
-
-          {/* Buy links */}
-          {album.buyLinks && album.buyLinks.length > 0 && (
-            <div className="mt-4 flex flex-wrap items-center gap-1 text-sm">
-              {album.buyLinks.map((link, i) => (
-                <span key={link._key ?? i} className="flex items-center">
-                  {i > 0 && (
-                    <span className="mx-2 text-brand-teal/50">|</span>
-                  )}
-                  <a
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`transition-colors hover:text-brand-teal-light ${
-                      link.platform === "PayPal CD"
-                        ? "text-brand-red"
-                        : "text-brand-teal"
-                    }`}
-                  >
-                    {link.platform}
-                  </a>
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Right column: details */}
+        {/* Left column: title, tracklist, credits, description, press */}
         <div className="lg:w-[55%]">
           {/* Title — all album titles in brand.red */}
           <h2 className="font-heading text-3xl uppercase tracking-wide text-brand-red">
@@ -112,22 +70,21 @@ export function AlbumDetail({ album, onClose }: AlbumDetailProps) {
           </h2>
 
           {/* Year */}
-          <p className="mt-1 text-sm text-brand-muted">{album.releaseYear}</p>
+          <p className="mt-1 text-sm text-brand-white">{album.releaseYear}</p>
 
-          {/* Description */}
-          {album.description && (
-            <div className="mt-4 whitespace-pre-line text-sm leading-relaxed text-brand-white">
-              {album.description}
-            </div>
+          {isEpOrSingle && (
+            <p className="mt-1 text-xs uppercase text-brand-muted">
+              {album.albumType === "ep" ? "EP" : "Single"}
+            </p>
           )}
 
-          {/* Tracklist */}
+          {/* Tracklist — first, bright white */}
           {album.tracklist && album.tracklist.length > 0 && (
             <ol className="mt-4 list-none space-y-0.5">
               {album.tracklist.map((track) => (
                 <li
                   key={track._key}
-                  className="text-sm leading-tight text-brand-muted"
+                  className="text-sm leading-tight text-brand-white"
                 >
                   <span className="mr-2 text-brand-teal/50">
                     {track.trackNumber}.
@@ -138,10 +95,17 @@ export function AlbumDetail({ album, onClose }: AlbumDetailProps) {
             </ol>
           )}
 
-          {/* Credits */}
+          {/* Credits — bright white, not dimmed */}
           {album.credits && (
-            <div className="mt-4 whitespace-pre-line text-xs italic text-brand-muted">
+            <div className="mt-4 whitespace-pre-line text-sm leading-relaxed text-brand-white">
               {album.credits}
+            </div>
+          )}
+
+          {/* Description / writeup */}
+          {album.description && (
+            <div className="mt-4 whitespace-pre-line text-sm leading-relaxed text-brand-white">
+              {album.description}
             </div>
           )}
 
@@ -180,6 +144,42 @@ export function AlbumDetail({ album, onClose }: AlbumDetailProps) {
                   </blockquote>
                 ))}
               </div>
+            </div>
+          )}
+        </div>
+
+        {/* Right column: cover image + buy links */}
+        <div className="lg:w-[45%]">
+          <Image
+            src={`/images/albums/${slug}.jpg`}
+            alt={album.title ?? "Album cover"}
+            width={600}
+            height={600}
+            className="aspect-square w-full object-cover"
+          />
+
+          {/* Buy links */}
+          {album.buyLinks && album.buyLinks.length > 0 && (
+            <div className="mt-4 flex flex-wrap items-center gap-1 text-sm">
+              {album.buyLinks.map((link, i) => (
+                <span key={link._key ?? i} className="flex items-center">
+                  {i > 0 && (
+                    <span className="mx-2 text-brand-teal/50">|</span>
+                  )}
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`transition-colors hover:text-brand-teal-light ${
+                      link.platform === "PayPal CD"
+                        ? "text-brand-red"
+                        : "text-brand-teal"
+                    }`}
+                  >
+                    {link.platform}
+                  </a>
+                </span>
+              ))}
             </div>
           )}
         </div>
