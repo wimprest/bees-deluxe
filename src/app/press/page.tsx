@@ -67,32 +67,32 @@ export default async function PressPage() {
             />
             {/* Quotes that fill space below the photo — desktop only */}
             <div className="hidden space-y-6 md:block">
-              {pressQuotes.slice(6, 10).map((quote) => (
+              {pressQuotes.slice(7, 11).map((quote) => (
                 <PressQuote key={quote._id} quote={quote} />
               ))}
             </div>
           </div>
           {/* Left column — first batch of quotes */}
           <div className="order-2 space-y-6 md:order-1">
-            {pressQuotes.slice(0, 6).map((quote) => (
+            {pressQuotes.slice(0, 7).map((quote) => (
               <PressQuote key={quote._id} quote={quote} />
             ))}
           </div>
         </div>
 
-        {/* Remaining quotes — two columns below (desktop skips 6-10 already shown in right col) */}
-        {pressQuotes.length > 6 && (
+        {/* Remaining quotes — two columns below (desktop skips 7-11 already shown in right col) */}
+        {pressQuotes.length > 7 && (
           <>
-            {/* Mobile: show quotes 6-10 that were hidden on mobile above */}
+            {/* Mobile: show quotes 7-11 that were hidden on mobile above */}
             <div className="mt-8 space-y-6 md:hidden">
-              {pressQuotes.slice(6, 10).map((quote) => (
+              {pressQuotes.slice(7, 11).map((quote) => (
                 <PressQuote key={quote._id} quote={quote} />
               ))}
             </div>
             {/* All remaining quotes in two columns */}
-            {pressQuotes.length > 10 && (
+            {pressQuotes.length > 11 && (
               <div className="mt-8 columns-1 gap-8 md:columns-2">
-                {pressQuotes.slice(10).map((quote) => (
+                {pressQuotes.slice(11).map((quote) => (
                   <div key={quote._id} className="break-inside-avoid">
                     <PressQuote quote={quote} />
                   </div>
