@@ -1,5 +1,6 @@
 import { Youtube, Facebook, Instagram, Twitter } from "lucide-react";
 import { SoundCloudIcon } from "@/components/icons/SoundCloudIcon";
+import { TikTokIcon } from "@/components/icons/TikTokIcon";
 
 const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
   YouTube: Youtube,
@@ -8,6 +9,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
   SoundCloud: SoundCloudIcon,
   Twitter: Twitter,
   "Twitter/X": Twitter,
+  TikTok: TikTokIcon,
 };
 
 const defaultSocialLinks = [

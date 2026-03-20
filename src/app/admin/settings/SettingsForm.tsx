@@ -10,6 +10,7 @@ const PLATFORM_OPTIONS = [
   "Instagram",
   "SoundCloud",
   "Twitter",
+  "TikTok",
   "Spotify",
 ];
 

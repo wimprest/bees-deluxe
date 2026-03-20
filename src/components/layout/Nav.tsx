@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Youtube, Facebook, Instagram, Twitter } from "lucide-react";
 import { SoundCloudIcon } from "@/components/icons/SoundCloudIcon";
+import { TikTokIcon } from "@/components/icons/TikTokIcon";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -26,6 +27,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
   SoundCloud: SoundCloudIcon,
   Twitter: Twitter,
   "Twitter/X": Twitter,
+  TikTok: TikTokIcon,
   Spotify: () => null, // Spotify doesn't get a nav icon
 };
 

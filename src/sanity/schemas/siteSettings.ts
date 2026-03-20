@@ -50,6 +50,7 @@ export const siteSettings = defineType({
                   "Instagram",
                   "SoundCloud",
                   "Twitter",
+                  "TikTok",
                   "Spotify",
                 ],
               },
