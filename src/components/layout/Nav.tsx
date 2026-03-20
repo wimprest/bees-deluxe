@@ -19,17 +19,42 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const socialLinks = [
-  { platform: "YouTube", href: "#", icon: Youtube },
-  { platform: "Facebook", href: "#", icon: Facebook },
-  { platform: "Instagram", href: "#", icon: Instagram },
-  { platform: "SoundCloud", href: "#", icon: SoundCloudIcon },
-  { platform: "Twitter", href: "#", icon: Twitter },
+const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
+  YouTube: Youtube,
+  Facebook: Facebook,
+  Instagram: Instagram,
+  SoundCloud: SoundCloudIcon,
+  Twitter: Twitter,
+  "Twitter/X": Twitter,
+  Spotify: () => null, // Spotify doesn't get a nav icon
+};
+
+const defaultSocialLinks = [
+  { platform: "YouTube", url: "#" },
+  { platform: "Facebook", url: "#" },
+  { platform: "Instagram", url: "#" },
+  { platform: "SoundCloud", url: "#" },
+  { platform: "Twitter", url: "#" },
 ];
 
-export function Nav() {
+interface NavProps {
+  socialLinks?: { platform?: string; url?: string }[];
+}
+
+export function Nav({ socialLinks }: NavProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+
+  const links =
+    socialLinks && socialLinks.length > 0 ? socialLinks : defaultSocialLinks;
+
+  const resolvedLinks = links
+    .map((link) => ({
+      platform: link.platform ?? "",
+      href: link.url ?? "#",
+      Icon: iconMap[link.platform ?? ""],
+    }))
+    .filter((link) => link.Icon);
 
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-brand-teal/20 bg-brand-black">
@@ -69,10 +94,12 @@ export function Nav() {
 
         {/* Desktop social icons */}
         <div className="hidden items-center gap-3 lg:flex">
-          {socialLinks.map(({ platform, href, icon: Icon }) => (
+          {resolvedLinks.map(({ platform, href, Icon }) => (
             <a
               key={platform}
               href={href}
+              target={href !== "#" ? "_blank" : undefined}
+              rel={href !== "#" ? "noopener noreferrer" : undefined}
               aria-label={platform}
               className="text-brand-white transition-colors hover:text-brand-teal"
             >
@@ -109,10 +136,12 @@ export function Nav() {
             </Link>
           ))}
           <div className="flex items-center gap-4 px-4 py-4">
-            {socialLinks.map(({ platform, href, icon: Icon }) => (
+            {resolvedLinks.map(({ platform, href, Icon }) => (
               <a
                 key={platform}
                 href={href}
+                target={href !== "#" ? "_blank" : undefined}
+                rel={href !== "#" ? "noopener noreferrer" : undefined}
                 aria-label={platform}
                 className="text-brand-white transition-colors hover:text-brand-teal"
               >

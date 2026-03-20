@@ -1,27 +1,53 @@
 import { Youtube, Facebook, Instagram, Twitter } from "lucide-react";
 import { SoundCloudIcon } from "@/components/icons/SoundCloudIcon";
 
-const socialLinks = [
-  { platform: "YouTube", href: "#", icon: Youtube },
-  { platform: "Facebook", href: "#", icon: Facebook },
-  { platform: "Instagram", href: "#", icon: Instagram },
-  { platform: "SoundCloud", href: "#", icon: SoundCloudIcon },
-  { platform: "Twitter", href: "#", icon: Twitter },
+const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
+  YouTube: Youtube,
+  Facebook: Facebook,
+  Instagram: Instagram,
+  SoundCloud: SoundCloudIcon,
+  Twitter: Twitter,
+  "Twitter/X": Twitter,
+};
+
+const defaultSocialLinks = [
+  { platform: "YouTube", url: "#" },
+  { platform: "Facebook", url: "#" },
+  { platform: "Instagram", url: "#" },
+  { platform: "SoundCloud", url: "#" },
+  { platform: "Twitter", url: "#" },
 ];
 
-export function Footer() {
+interface FooterProps {
+  socialLinks?: { platform?: string; url?: string }[];
+}
+
+export function Footer({ socialLinks }: FooterProps) {
+  const links =
+    socialLinks && socialLinks.length > 0 ? socialLinks : defaultSocialLinks;
+
+  const resolvedLinks = links
+    .map((link) => ({
+      platform: link.platform ?? "",
+      href: link.url ?? "#",
+      Icon: iconMap[link.platform ?? ""],
+    }))
+    .filter((link) => link.Icon);
+
   return (
     <footer className="w-full bg-brand-teal py-6">
       <div className="mx-auto flex max-w-[960px] flex-col items-center gap-4 px-4 sm:flex-row sm:justify-between sm:px-6">
         <p className="text-sm text-brand-black">
-          &copy;&nbsp;{new Date().getFullYear()}&nbsp;Bees Deluxe. Slapping Cat Records
-          &amp; Carbonmind Music Publishing.
+          &copy;&nbsp;{new Date().getFullYear()}&nbsp;Bees Deluxe. Slapping Cat
+          Records &amp; Carbonmind Music Publishing.
         </p>
         <div className="flex items-center gap-4">
-          {socialLinks.map(({ platform, href, icon: Icon }) => (
+          {resolvedLinks.map(({ platform, href, Icon }) => (
             <a
               key={platform}
               href={href}
+              target={href !== "#" ? "_blank" : undefined}
+              rel={href !== "#" ? "noopener noreferrer" : undefined}
               aria-label={platform}
               className="text-brand-black transition-opacity hover:opacity-70"
             >

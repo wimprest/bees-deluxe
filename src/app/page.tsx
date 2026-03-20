@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { client } from "@/lib/sanity";
-import { upcomingShowsQuery } from "@/lib/queries";
+import { upcomingShowsQuery, siteSettingsQuery } from "@/lib/queries";
 import { PageShell } from "@/components/layout/PageShell";
 import { SectionDivider } from "@/components/layout/SectionDivider";
 import { UpcomingShowsWidget } from "@/components/shows/UpcomingShowsWidget";
 import type { Show } from "@/types";
 
-const SPOTIFY_EMBED_URL =
+const DEFAULT_SPOTIFY_EMBED_URL =
   "https://open.spotify.com/embed/artist/17Y0kmsT4nzoNXI9nMkrp3?utm_source=generator&theme=0";
 
 const HALLUCINATE_LINKS = [
@@ -19,10 +19,18 @@ const HALLUCINATE_LINKS = [
 
 export default async function HomePage() {
   let upcomingShows: Show[] = [];
+  let spotifyEmbedUrl = DEFAULT_SPOTIFY_EMBED_URL;
   try {
-    upcomingShows = await client.fetch(upcomingShowsQuery, { limit: 6 });
+    const [shows, settings] = await Promise.all([
+      client.fetch(upcomingShowsQuery, { limit: 6 }),
+      client.fetch(siteSettingsQuery),
+    ]);
+    upcomingShows = shows;
+    if (settings?.spotifyEmbedUrl) {
+      spotifyEmbedUrl = settings.spotifyEmbedUrl;
+    }
   } catch {
-    // Sanity not yet populated — fall back to empty
+    // Sanity not yet populated — fall back to defaults
   }
 
   return (
@@ -100,7 +108,7 @@ export default async function HomePage() {
                 style={{ background: "var(--gradient-dark-surface)" }}
               >
                 <iframe
-                  src={SPOTIFY_EMBED_URL}
+                  src={spotifyEmbedUrl}
                   width="100%"
                   height="152"
                   frameBorder="0"

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald, Inter, Courier_Prime } from "next/font/google";
+import { client } from "@/lib/sanity";
+import { siteSettingsQuery } from "@/lib/queries";
 import { Nav } from "@/components/layout/Nav";
 import { SiteTagline } from "@/components/layout/SiteTagline";
 import { Footer } from "@/components/layout/Footer";
@@ -34,11 +36,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+interface SocialLink {
+  platform?: string;
+  url?: string;
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let socialLinks: SocialLink[] = [];
+  try {
+    const settings = await client.fetch(siteSettingsQuery);
+    if (settings?.socialLinks) {
+      socialLinks = settings.socialLinks;
+    }
+  } catch {
+    // Sanity unavailable — use defaults
+  }
+
   return (
     <html
       lang="en"
@@ -46,14 +63,14 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col overflow-x-hidden bg-brand-black text-brand-white font-body">
         <NavigationProvider>
-          <Nav />
+          <Nav socialLinks={socialLinks} />
           <div className="pt-16 md:pt-24">
             <SiteTagline />
           </div>
           <main className="flex-1">
             <PageTransition>{children}</PageTransition>
           </main>
-          <Footer />
+          <Footer socialLinks={socialLinks} />
         </NavigationProvider>
       </body>
     </html>
