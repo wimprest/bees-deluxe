@@ -1,15 +1,25 @@
 {
-  "name": "bees-deluxe-temp",
+  "name": "bees-deluxe",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3015",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@sanity/image-url": "^2.0.3",
+    "@sanity/vision": "^5.17.1",
+    "cloudinary": "^2.9.0",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^0.577.0",
     "next": "16.2.0",
+    "next-cloudinary": "^6.17.5",
+    "next-sanity": "^12.1.3",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
