@@ -46,3 +46,4 @@
 | 2026-03-19 | Social icons: white on black in header, black on teal in footer, homogenized sizing | Conrad's current site has color inconsistency and size variance; clean this up |
 | 2026-03-19 | Show listing: 4 lines max (date, venue+phone, location, time), hairline teal rule between entries | Carries Conrad's minimalist aesthetic; phone number appears inline right of venue name when present |
 | 2026-03-19 | EPK page: faithful responsive rebuild, no redesign | EPK is a sales tool for paid bookings — Conrad's structure is deliberate |
+| 2026-03-20 | Shows page image uses Phase 03 band-photo as placeholder | Proper shows image to be sourced in Phase 12 |
