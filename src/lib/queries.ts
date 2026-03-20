@@ -74,7 +74,16 @@ export const allVideosQuery = groq`
 `;
 
 export const allPhotosQuery = groq`
-  *[_type == "photo"] | order(order asc)
+  *[_type == "photo"] | order(order asc) {
+    _id,
+    caption,
+    credit,
+    order,
+    featured,
+    image {
+      asset -> { _id, url }
+    }
+  }
 `;
 
 export const siteSettingsQuery = groq`

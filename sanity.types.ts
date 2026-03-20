@@ -497,24 +497,19 @@ export type AllVideosQueryResult = Array<{
 
 // Source: src/lib/queries.ts
 // Variable: allPhotosQuery
-// Query: *[_type == "photo"] | order(order asc)
+// Query: *[_type == "photo"] | order(order asc) {    _id,    caption,    credit,    order,    featured,    image {      asset -> { _id, url }    }  }
 export type AllPhotosQueryResult = Array<{
   _id: string;
-  _type: "photo";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  image?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  caption?: string;
-  credit?: string;
-  order?: number;
-  featured?: boolean;
+  caption: string | null;
+  credit: string | null;
+  order: number | null;
+  featured: boolean | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+  } | null;
 }>;
 
 // Source: src/lib/queries.ts
@@ -556,7 +551,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "album" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    releaseYear,\n    albumType,\n    description,\n    tracklist,\n    credits,\n    featured,\n    order,\n    coverImage {\n      asset -> { _id, url }\n    },\n    buyLinks,\n    pressQuotes\n  }\n': AlbumBySlugQueryResult;
     '\n  *[_type == "pressQuote"] | order(order asc)\n': AllPressQuotesQueryResult;
     '\n  *[_type == "video"] | order(featured desc, order asc)\n': AllVideosQueryResult;
-    '\n  *[_type == "photo"] | order(order asc)\n': AllPhotosQueryResult;
+    '\n  *[_type == "photo"] | order(order asc) {\n    _id,\n    caption,\n    credit,\n    order,\n    featured,\n    image {\n      asset -> { _id, url }\n    }\n  }\n': AllPhotosQueryResult;
     '\n  *[_type == "siteSettings"][0]\n': SiteSettingsQueryResult;
   }
 }
