@@ -2,26 +2,34 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { deletePhoto } from "./actions";
 
 interface PhotoItem {
   _id: string;
   caption?: string;
   order: number;
+  imageSrc: string; // resolved at load time, stays stable through reorder
   image?: { asset?: { url: string } };
 }
 
 export default function AdminPhotosPage() {
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     fetch("/api/admin/photos")
       .then((r) => r.json())
       .then((data) => {
-        setPhotos(data.photos || []);
+        // Resolve image source once at load time so it doesn't change on reorder
+        const resolved = (data.photos || []).map(
+          (p: { _id: string; caption?: string; order: number; image?: { asset?: { url: string } } }) => ({
+            ...p,
+            imageSrc:
+              p.image?.asset?.url ??
+              `/images/photos/photo-${String(p.order).padStart(2, "0")}.jpg`,
+          })
+        );
+        setPhotos(resolved);
         setLoading(false);
       });
   }, []);
@@ -40,7 +48,7 @@ export default function AdminPhotosPage() {
     const updated = [...photos];
     [updated[idx], updated[newIdx]] = [updated[newIdx], updated[idx]];
 
-    // Update order values
+    // Update order values but keep imageSrc stable
     const reordered = updated.map((p, i) => ({ ...p, order: i + 1 }));
     setPhotos(reordered);
 
@@ -78,54 +86,49 @@ export default function AdminPhotosPage() {
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {photos.map((photo, idx) => {
-          const imgSrc =
-            photo.image?.asset?.url ??
-            `/images/photos/photo-${String(photo.order).padStart(2, "0")}.jpg`;
-          return (
-            <div
-              key={photo._id}
-              className="border border-brand-teal/10 bg-brand-charcoal"
-            >
-              <div className="aspect-square">
-                <img
-                  src={imgSrc}
-                  alt={photo.caption ?? ""}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="flex items-center justify-between px-2 py-2">
-                <p className="truncate text-xs text-brand-muted">
-                  {photo.caption || `Photo ${photo.order}`}
-                </p>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleMove(photo._id, -1)}
-                    disabled={idx === 0}
-                    className="text-xs text-brand-teal disabled:opacity-30"
-                    title="Move up"
-                  >
-                    ←
-                  </button>
-                  <button
-                    onClick={() => handleMove(photo._id, 1)}
-                    disabled={idx === photos.length - 1}
-                    className="text-xs text-brand-teal disabled:opacity-30"
-                    title="Move down"
-                  >
-                    →
-                  </button>
-                  <button
-                    onClick={() => handleDelete(photo._id)}
-                    className="text-xs text-brand-red hover:text-brand-white"
-                  >
-                    ✕
-                  </button>
-                </div>
+        {photos.map((photo, idx) => (
+          <div
+            key={photo._id}
+            className="border border-brand-teal/10 bg-brand-charcoal"
+          >
+            <div className="aspect-square">
+              <img
+                src={photo.imageSrc}
+                alt={photo.caption ?? ""}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="flex items-center justify-between px-2 py-2">
+              <p className="truncate text-xs text-brand-muted">
+                {photo.caption || `Photo ${idx + 1}`}
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleMove(photo._id, -1)}
+                  disabled={idx === 0}
+                  className="text-xs text-brand-teal disabled:opacity-30"
+                  title="Move left"
+                >
+                  ←
+                </button>
+                <button
+                  onClick={() => handleMove(photo._id, 1)}
+                  disabled={idx === photos.length - 1}
+                  className="text-xs text-brand-teal disabled:opacity-30"
+                  title="Move right"
+                >
+                  →
+                </button>
+                <button
+                  onClick={() => handleDelete(photo._id)}
+                  className="text-xs text-brand-red hover:text-brand-white"
+                >
+                  ✕
+                </button>
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );
