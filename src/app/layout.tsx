@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   title: "Bees Deluxe | Boston Blues",
   description:
     "Bees Deluxe — Boston acid blues. Live shows, music, videos, and more.",
+  icons: {
+    icon: "/images/favicon.png",
+  },
 };
 
 export default function RootLayout({
