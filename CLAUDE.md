@@ -44,3 +44,10 @@ npm run build        # Build verification
 - Parent `E:\Code\package-lock.json` causes a Turbopack workspace root warning during build. Harmless but noisy. Can silence with `turbopack.root` in next.config.ts if needed.
 - Sanity project not yet created — `.env.local` has empty placeholders. Studio will error until project ID is populated.
 - `sanity typegen generate` and `sanity deploy` require a live Sanity project connection.
+
+## Approved Tools
+
+The following MCP tool actions are pre-approved for this project:
+- plugin:playwright:playwright - Navigate to a URL
+- plugin:playwright:playwright - Take a screenshot
+- plugin:playwright:playwright - Click

@@ -68,7 +68,8 @@ export function Nav({ socialLinks }: NavProps) {
             alt="Bees Deluxe"
             width={270}
             height={90}
-            className="h-[90px] w-auto"
+            className="h-[90px]"
+            style={{ width: "auto" }}
             priority
           />
         </Link>

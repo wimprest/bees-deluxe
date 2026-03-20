@@ -74,6 +74,7 @@ export default async function ShowsPage() {
               width={380}
               height={500}
               className="w-full object-cover"
+              style={{ height: "auto" }}
             />
           </div>
         </div>

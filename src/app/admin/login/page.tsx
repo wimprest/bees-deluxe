@@ -40,7 +40,8 @@ export default function AdminLoginPage() {
             alt="Bees Deluxe"
             width={180}
             height={60}
-            className="h-[60px] w-auto"
+            className="h-[60px]"
+            style={{ width: "auto" }}
           />
         </div>
         <h1 className="mb-6 text-center font-heading text-xl text-brand-white">
