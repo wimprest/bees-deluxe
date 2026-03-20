@@ -69,34 +69,37 @@ export function MusicianCard({ musician, index }: MusicianCardProps) {
         </div>
       )}
 
-      {/* Name */}
-      <h3 className="mt-3 font-heading text-xl text-brand-white">{name}</h3>
+      {/* Red background text block — flush below photo */}
+      <div className="bg-brand-red p-4">
+        {/* Name */}
+        <h3 className="font-heading text-xl text-brand-white">{name}</h3>
 
-      {/* Role */}
-      <p className="text-sm uppercase tracking-wide text-brand-teal">
-        {musician.role}
-      </p>
-
-      {/* Bio — desktop: full, mobile: truncated */}
-      <div className="mt-2">
-        {/* Desktop: always full */}
-        <p className="hidden text-sm leading-relaxed text-brand-white md:block">
-          {bio}
+        {/* Role */}
+        <p className="text-sm uppercase tracking-wide text-brand-white">
+          {musician.role}
         </p>
 
-        {/* Mobile: truncated with toggle */}
-        <div className="md:hidden">
-          <p className="text-sm leading-relaxed text-brand-white">
-            {expanded ? bio : truncated}
+        {/* Bio — desktop: full, mobile: truncated */}
+        <div className="mt-2">
+          {/* Desktop: always full */}
+          <p className="hidden text-sm leading-relaxed text-brand-white md:block">
+            {bio}
           </p>
-          {needsTruncation && (
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="mt-1 text-xs text-brand-teal"
-            >
-              {expanded ? "Read less" : "Read more"}
-            </button>
-          )}
+
+          {/* Mobile: truncated with toggle */}
+          <div className="md:hidden">
+            <p className="text-sm leading-relaxed text-brand-white">
+              {expanded ? bio : truncated}
+            </p>
+            {needsTruncation && (
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="mt-1 text-xs text-brand-white/70"
+              >
+                {expanded ? "Read less" : "Read more"}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>

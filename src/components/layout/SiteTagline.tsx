@@ -10,7 +10,7 @@ export function SiteTagline() {
 
   return (
     <div className="w-full border-b border-brand-teal/10 bg-brand-black py-3">
-      <div className="mx-auto max-w-[960px] px-4 text-center text-xs leading-relaxed text-brand-muted sm:px-6 sm:text-sm">
+      <div className="mx-auto max-w-[960px] px-4 text-left text-xs leading-relaxed text-brand-muted sm:px-6 sm:text-sm">
         <p>
           Bees Deluxe —{" "}
           <span className="italic text-brand-white">
