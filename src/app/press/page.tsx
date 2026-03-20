@@ -47,27 +47,29 @@ export default async function PressPage() {
 
   return (
     <PageShell>
-      {/* Section 1 — Quotes */}
-      <section className="py-16">
+      {/* Section 1 — Featured Photo */}
+      <section className="py-16 pb-8">
         <SectionDivider label="Bees Deluxe Press" />
-        <div className="mt-12 columns-1 gap-8 md:columns-2">
+        <div className="mt-12">
+          <Image
+            src="/images/press/press-photo.jpg"
+            alt="Bees Deluxe live performance"
+            width={960}
+            height={640}
+            className="w-full object-cover"
+          />
+        </div>
+      </section>
+
+      {/* Section 2 — Quotes */}
+      <section className="py-8">
+        <div className="columns-1 gap-8 md:columns-2">
           {pressQuotes.map((quote) => (
             <div key={quote._id} className="break-inside-avoid">
               <PressQuote quote={quote} />
             </div>
           ))}
         </div>
-      </section>
-
-      {/* Section 2 — Featured Photo */}
-      <section className="py-8">
-        <Image
-          src="/images/press/press-photo.jpg"
-          alt="Bees Deluxe live performance"
-          width={960}
-          height={640}
-          className="w-full object-cover"
-        />
       </section>
 
       {/* Section 3 — Media Inquiry CTA */}
