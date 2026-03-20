@@ -22,9 +22,11 @@ export function MusicianForm({ musician }: MusicianFormProps) {
   const router = useRouter();
   const isEdit = !!musician;
   const [photoUrl, setPhotoUrl] = useState(musician?.photoUrl ?? "");
+  const [isCurrent, setIsCurrent] = useState(musician?.isCurrentMember ?? true);
 
   async function handleSubmit(formData: FormData) {
     formData.set("photoUrl", photoUrl);
+    formData.set("isCurrentMember", isCurrent ? "on" : "");
     if (isEdit) await updateMusician(musician!._id, formData);
     else await createMusician(formData);
     router.push("/admin/musicians");
@@ -38,6 +40,38 @@ export function MusicianForm({ musician }: MusicianFormProps) {
   return (
     <form action={handleSubmit} className="max-w-xl space-y-4">
       <AdminFormField label="Name" name="name" defaultValue={musician?.name} required />
+
+      {/* Member category — prominent radio buttons */}
+      <div>
+        <label className="mb-2 block text-xs uppercase tracking-wide text-brand-muted">
+          Category
+        </label>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => setIsCurrent(true)}
+            className={`flex-1 py-3 text-center font-heading text-sm uppercase tracking-widest transition-colors ${
+              isCurrent
+                ? "bg-brand-teal text-brand-black"
+                : "border border-brand-teal/20 bg-brand-slate text-brand-muted hover:text-brand-white"
+            }`}
+          >
+            Current Band
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsCurrent(false)}
+            className={`flex-1 py-3 text-center font-heading text-sm uppercase tracking-widest transition-colors ${
+              !isCurrent
+                ? "bg-brand-teal text-brand-black"
+                : "border border-brand-teal/20 bg-brand-slate text-brand-muted hover:text-brand-white"
+            }`}
+          >
+            Special Guest
+          </button>
+        </div>
+      </div>
+
       <AdminFormField label="Role" name="role" defaultValue={musician?.role} placeholder='e.g. "Guitar & Vocals"' required />
 
       {/* Photo upload */}
@@ -55,10 +89,6 @@ export function MusicianForm({ musician }: MusicianFormProps) {
 
       <AdminFormField label="Bio" name="bio" type="textarea" defaultValue={musician?.bio} rows={6} required />
       <AdminFormField label="Order" name="order" type="number" defaultValue={String(musician?.order ?? "")} />
-      <div className="flex items-center gap-2">
-        <input type="checkbox" id="isCurrentMember" name="isCurrentMember" defaultChecked={musician?.isCurrentMember ?? true} className="accent-brand-teal" />
-        <label htmlFor="isCurrentMember" className="text-sm text-brand-white">Current Band Member</label>
-      </div>
       <div className="flex items-center justify-between">
         <button type="submit" className="bg-brand-teal px-8 py-3 font-heading uppercase tracking-widest text-brand-black hover:bg-brand-teal-dark">
           {isEdit ? "Update Musician" : "Add Musician"}
