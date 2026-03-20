@@ -3,6 +3,8 @@ import { Oswald, Inter, Courier_Prime } from "next/font/google";
 import { Nav } from "@/components/layout/Nav";
 import { SiteTagline } from "@/components/layout/SiteTagline";
 import { Footer } from "@/components/layout/Footer";
+import { NavigationProvider } from "@/context/NavigationContext";
+import { PageTransition } from "@/components/layout/PageTransition";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -39,13 +41,17 @@ export default function RootLayout({
       lang="en"
       className={`${oswald.variable} ${inter.variable} ${courierPrime.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-brand-black text-brand-white font-body">
-        <Nav />
-        <div className="pt-16 md:pt-24">
-          <SiteTagline />
-        </div>
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="flex min-h-full flex-col overflow-x-hidden bg-brand-black text-brand-white font-body">
+        <NavigationProvider>
+          <Nav />
+          <div className="pt-16 md:pt-24">
+            <SiteTagline />
+          </div>
+          <main className="flex-1">
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <Footer />
+        </NavigationProvider>
       </body>
     </html>
   );
