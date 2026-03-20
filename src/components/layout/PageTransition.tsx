@@ -14,6 +14,12 @@ interface PageTransitionProps {
   children: ReactNode;
 }
 
+function getBaseRoute(pathname: string): string {
+  // "/discs/hallucinate" → "/discs", "/shows" → "/shows", "/" → "/"
+  const segments = pathname.split("/").filter(Boolean);
+  return segments.length > 0 ? `/${segments[0]}` : "/";
+}
+
 export function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname();
   const { direction } = useNavigationDirection();
@@ -21,7 +27,7 @@ export function PageTransition({ children }: PageTransitionProps) {
   const [displayChildren, setDisplayChildren] = useState(children);
   const [exitChildren, setExitChildren] = useState<ReactNode | null>(null);
   const dirRef = useRef(direction);
-  const prevPathRef = useRef(pathname);
+  const prevBaseRouteRef = useRef(getBaseRoute(pathname));
   const containerRef = useRef<HTMLDivElement>(null);
 
   const runTransition = useCallback(() => {
@@ -44,20 +50,21 @@ export function PageTransition({ children }: PageTransitionProps) {
   }, []);
 
   useEffect(() => {
-    if (pathname !== prevPathRef.current) {
+    const currentBase = getBaseRoute(pathname);
+    if (currentBase !== prevBaseRouteRef.current) {
+      // Different top-level route — run slide transition
       dirRef.current = direction;
-      prevPathRef.current = pathname;
+      prevBaseRouteRef.current = currentBase;
 
-      // Capture old content for exit
       setExitChildren(displayChildren);
       setDisplayChildren(children);
 
-      // Kick off transition on next frame
       requestAnimationFrame(() => {
         runTransition();
       });
     } else {
-      // Same path, just update children (e.g. data refresh)
+      // Same route (e.g. /discs/hallucinate → /discs/smash-hits) — just swap content
+      prevBaseRouteRef.current = currentBase;
       setDisplayChildren(children);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
