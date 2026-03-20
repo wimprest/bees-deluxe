@@ -178,6 +178,7 @@ export type Musician = {
   };
   bio?: string;
   order?: number;
+  photoUrl?: string;
   isCurrentMember?: boolean;
 };
 
@@ -316,242 +317,115 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
-// Source: src/lib/queries.ts
-// Variable: upcomingShowsQuery
-// Query: *[_type == "show" && date >= now()] | order(date asc) [0...$limit]
-export type UpcomingShowsQueryResult = Array<{
+// Source: src/app/admin/albums/page.tsx
+// Variable: albumsAdmin
+// Query: *[_type == "album"] | order(order asc) { _id, title, releaseYear, albumType, order, featured }
+export type AlbumsAdminResult = Array<{
   _id: string;
-  _type: "show";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  date?: string;
-  venueName?: string;
-  venueAddress?: string;
-  city?: string;
-  state?: string;
-  startTime?: string;
-  phone?: string;
-  notes?: string;
-  ticketUrl?: string;
+  title: string | null;
+  releaseYear: number | null;
+  albumType: "album" | "ep" | "single" | null;
+  order: number | null;
+  featured: boolean | null;
 }>;
 
-// Source: src/lib/queries.ts
-// Variable: allShowsQuery
-// Query: *[_type == "show"] | order(date asc)
-export type AllShowsQueryResult = Array<{
-  _id: string;
-  _type: "show";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  date?: string;
-  venueName?: string;
-  venueAddress?: string;
-  city?: string;
-  state?: string;
-  startTime?: string;
-  phone?: string;
-  notes?: string;
-  ticketUrl?: string;
-}>;
-
-// Source: src/lib/queries.ts
-// Variable: allMusiciansQuery
-// Query: *[_type == "musician"] | order(isCurrentMember desc, order asc) {    _id,    name,    role,    bio,    isCurrentMember,    order,    photo {      asset -> {        _id,        url      }    }  }
-export type AllMusiciansQueryResult = Array<{
+// Source: src/app/admin/musicians/page.tsx
+// Variable: musiciansAdmin
+// Query: *[_type == "musician"] | order(isCurrentMember desc, order asc) { _id, name, role, isCurrentMember, order }
+export type MusiciansAdminResult = Array<{
   _id: string;
   name: string | null;
   role: string | null;
-  bio: string | null;
   isCurrentMember: boolean | null;
   order: number | null;
-  photo: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-  } | null;
 }>;
 
-// Source: src/lib/queries.ts
-// Variable: allAlbumsQuery
-// Query: *[_type == "album"] | order(featured desc, order asc) {    _id,    title,    slug,    releaseYear,    albumType,    description,    tracklist,    credits,    featured,    order,    coverImage {      asset -> { _id, url }    },    buyLinks,    pressQuotes  }
-export type AllAlbumsQueryResult = Array<{
+// Source: src/app/admin/page.tsx
+// Variable: countsQuery
+// Query: {  "shows": count(*[_type == "show" && date >= now()]),  "albums": count(*[_type == "album"]),  "musicians": count(*[_type == "musician"]),  "press": count(*[_type == "pressQuote"]),  "photos": count(*[_type == "photo"]),  "videos": count(*[_type == "video"])}
+export type CountsQueryResult = {
+  shows: number;
+  albums: number;
+  musicians: number;
+  press: number;
+  photos: number;
+  videos: number;
+};
+
+// Source: src/app/admin/page.tsx
+// Variable: upcomingShowsQuery
+// Query: *[_type == "show" && date >= now()] | order(date asc) [0...3] {    _id, date, venueName, city, state  }
+export type UpcomingShowsQueryResult = Array<{
   _id: string;
-  title: string | null;
-  slug: Slug | null;
-  releaseYear: number | null;
-  albumType: "album" | "ep" | "single" | null;
-  description: string | null;
-  tracklist: Array<{
-    trackNumber?: number;
-    title?: string;
-    _key: string;
-  }> | null;
-  credits: string | null;
-  featured: boolean | null;
-  order: number | null;
-  coverImage: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-  } | null;
-  buyLinks: Array<{
-    platform?:
-      | "Amazon"
-      | "Apple Music"
-      | "Bandcamp"
-      | "iTunes"
-      | "PayPal CD"
-      | "Spotify";
-    url?: string;
-    _key: string;
-  }> | null;
-  pressQuotes: Array<{
-    quote?: string;
-    attribution?: string;
-    publication?: string;
-    publicationUrl?: string;
-    _key: string;
-  }> | null;
+  date: string | null;
+  venueName: string | null;
+  city: string | null;
+  state: string | null;
 }>;
 
-// Source: src/lib/queries.ts
-// Variable: albumBySlugQuery
-// Query: *[_type == "album" && slug.current == $slug][0] {    _id,    title,    slug,    releaseYear,    albumType,    description,    tracklist,    credits,    featured,    order,    coverImage {      asset -> { _id, url }    },    buyLinks,    pressQuotes  }
-export type AlbumBySlugQueryResult = {
+// Source: src/app/admin/press/page.tsx
+// Variable: pressAdmin
+// Query: *[_type == "pressQuote"] | order(order asc) { _id, quote, attribution, order }
+export type PressAdminResult = Array<{
   _id: string;
-  title: string | null;
-  slug: Slug | null;
-  releaseYear: number | null;
-  albumType: "album" | "ep" | "single" | null;
-  description: string | null;
-  tracklist: Array<{
-    trackNumber?: number;
-    title?: string;
-    _key: string;
-  }> | null;
-  credits: string | null;
-  featured: boolean | null;
+  quote: string | null;
+  attribution: string | null;
   order: number | null;
-  coverImage: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-  } | null;
-  buyLinks: Array<{
-    platform?:
-      | "Amazon"
-      | "Apple Music"
-      | "Bandcamp"
-      | "iTunes"
-      | "PayPal CD"
-      | "Spotify";
-    url?: string;
-    _key: string;
-  }> | null;
-  pressQuotes: Array<{
-    quote?: string;
-    attribution?: string;
-    publication?: string;
-    publicationUrl?: string;
-    _key: string;
-  }> | null;
+}>;
+
+// Source: src/app/admin/shows/[id]/page.tsx
+// Variable: showByIdQuery
+// Query: *[_type == "show" && _id == $id][0]
+export type ShowByIdQueryResult = {
+  _id: string;
+  _type: "show";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  date?: string;
+  venueName?: string;
+  venueAddress?: string;
+  city?: string;
+  state?: string;
+  startTime?: string;
+  phone?: string;
+  notes?: string;
+  ticketUrl?: string;
 } | null;
 
-// Source: src/lib/queries.ts
-// Variable: allPressQuotesQuery
-// Query: *[_type == "pressQuote"] | order(order asc)
-export type AllPressQuotesQueryResult = Array<{
+// Source: src/app/admin/shows/page.tsx
+// Variable: allShowsAdmin
+// Query: *[_type == "show"] | order(date desc) {    _id, date, venueName, city, state  }
+export type AllShowsAdminResult = Array<{
   _id: string;
-  _type: "pressQuote";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  quote?: string;
-  attribution?: string;
-  publication?: string;
-  publicationUrl?: string;
-  year?: number;
-  order?: number;
+  date: string | null;
+  venueName: string | null;
+  city: string | null;
+  state: string | null;
 }>;
 
-// Source: src/lib/queries.ts
-// Variable: allVideosQuery
-// Query: *[_type == "video"] | order(featured desc, order asc)
-export type AllVideosQueryResult = Array<{
+// Source: src/app/admin/videos/page.tsx
+// Variable: videosAdmin
+// Query: *[_type == "video"] | order(featured desc, order asc) { _id, title, youtubeId, featured, order }
+export type VideosAdminResult = Array<{
   _id: string;
-  _type: "video";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  youtubeId?: string;
-  description?: string;
-  order?: number;
-  featured?: boolean;
-}>;
-
-// Source: src/lib/queries.ts
-// Variable: allPhotosQuery
-// Query: *[_type == "photo"] | order(order asc) {    _id,    caption,    credit,    order,    featured,    image {      asset -> { _id, url }    }  }
-export type AllPhotosQueryResult = Array<{
-  _id: string;
-  caption: string | null;
-  credit: string | null;
-  order: number | null;
+  title: string | null;
+  youtubeId: string | null;
   featured: boolean | null;
-  image: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-  } | null;
+  order: number | null;
 }>;
-
-// Source: src/lib/queries.ts
-// Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0]
-export type SiteSettingsQueryResult = {
-  _id: string;
-  _type: "siteSettings";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  heroQuote?: string;
-  heroQuoteAttribution?: string;
-  bookingAgentName?: string;
-  bookingAgentEmail?: string;
-  bookingAgentPhone?: string;
-  socialLinks?: Array<{
-    platform?:
-      | "Facebook"
-      | "Instagram"
-      | "SoundCloud"
-      | "Spotify"
-      | "Twitter"
-      | "YouTube";
-    url?: string;
-    _key: string;
-  }>;
-  spotifyEmbedUrl?: string;
-} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "show" && date >= now()] | order(date asc) [0...$limit]\n': UpcomingShowsQueryResult;
-    '\n  *[_type == "show"] | order(date asc)\n': AllShowsQueryResult;
-    '\n  *[_type == "musician"] | order(isCurrentMember desc, order asc) {\n    _id,\n    name,\n    role,\n    bio,\n    isCurrentMember,\n    order,\n    photo {\n      asset -> {\n        _id,\n        url\n      }\n    }\n  }\n': AllMusiciansQueryResult;
-    '\n  *[_type == "album"] | order(featured desc, order asc) {\n    _id,\n    title,\n    slug,\n    releaseYear,\n    albumType,\n    description,\n    tracklist,\n    credits,\n    featured,\n    order,\n    coverImage {\n      asset -> { _id, url }\n    },\n    buyLinks,\n    pressQuotes\n  }\n': AllAlbumsQueryResult;
-    '\n  *[_type == "album" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    releaseYear,\n    albumType,\n    description,\n    tracklist,\n    credits,\n    featured,\n    order,\n    coverImage {\n      asset -> { _id, url }\n    },\n    buyLinks,\n    pressQuotes\n  }\n': AlbumBySlugQueryResult;
-    '\n  *[_type == "pressQuote"] | order(order asc)\n': AllPressQuotesQueryResult;
-    '\n  *[_type == "video"] | order(featured desc, order asc)\n': AllVideosQueryResult;
-    '\n  *[_type == "photo"] | order(order asc) {\n    _id,\n    caption,\n    credit,\n    order,\n    featured,\n    image {\n      asset -> { _id, url }\n    }\n  }\n': AllPhotosQueryResult;
-    '\n  *[_type == "siteSettings"][0]\n': SiteSettingsQueryResult;
+    '*[_type == "album"] | order(order asc) { _id, title, releaseYear, albumType, order, featured }': AlbumsAdminResult;
+    '*[_type == "musician"] | order(isCurrentMember desc, order asc) { _id, name, role, isCurrentMember, order }': MusiciansAdminResult;
+    '{\n  "shows": count(*[_type == "show" && date >= now()]),\n  "albums": count(*[_type == "album"]),\n  "musicians": count(*[_type == "musician"]),\n  "press": count(*[_type == "pressQuote"]),\n  "photos": count(*[_type == "photo"]),\n  "videos": count(*[_type == "video"])\n}': CountsQueryResult;
+    '\n  *[_type == "show" && date >= now()] | order(date asc) [0...3] {\n    _id, date, venueName, city, state\n  }\n': UpcomingShowsQueryResult;
+    '*[_type == "pressQuote"] | order(order asc) { _id, quote, attribution, order }': PressAdminResult;
+    '*[_type == "show" && _id == $id][0]': ShowByIdQueryResult;
+    '\n  *[_type == "show"] | order(date desc) {\n    _id, date, venueName, city, state\n  }\n': AllShowsAdminResult;
+    '*[_type == "video"] | order(featured desc, order asc) { _id, title, youtubeId, featured, order }': VideosAdminResult;
   }
 }

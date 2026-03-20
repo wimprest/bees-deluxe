@@ -10,6 +10,7 @@ interface MusicianCardProps {
     name?: string;
     role?: string;
     bio?: string;
+    photoUrl?: string;
     photo?: {
       asset?: {
         _id: string;
@@ -39,7 +40,7 @@ export function MusicianCard({ musician, index }: MusicianCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
 
-  const photoUrl = musician.photo?.asset?.url;
+  const photoUrl = musician.photoUrl || musician.photo?.asset?.url;
   const name = musician.name ?? "";
   const bio = musician.bio ?? "";
   const truncated = truncateBio(bio, 2);
@@ -50,7 +51,7 @@ export function MusicianCard({ musician, index }: MusicianCardProps) {
       ref={ref}
       initial={{ opacity: 0, x: -40 }}
       animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+      transition={{ duration: 0.4, delay: 0.25 + index * 0.1 }}
     >
       {/* Photo or placeholder */}
       {photoUrl ? (

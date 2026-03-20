@@ -37,7 +37,7 @@ export function Nav() {
         {/* Logo */}
         <Link href="/" className="shrink-0">
           <Image
-            src="/images/bees-logo.png"
+            src="/images/bees-logo-transparent.png"
             alt="Bees Deluxe"
             width={270}
             height={90}

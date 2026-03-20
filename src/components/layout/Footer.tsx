@@ -14,7 +14,7 @@ export function Footer() {
     <footer className="w-full bg-brand-teal py-6">
       <div className="mx-auto flex max-w-[960px] flex-col items-center gap-4 px-4 sm:flex-row sm:justify-between sm:px-6">
         <p className="text-sm text-brand-black">
-          &copy; {new Date().getFullYear()} Bees Deluxe. Slapping Cat Records
+          &copy;&nbsp;{new Date().getFullYear()}&nbsp;Bees Deluxe. Slapping Cat Records
           &amp; Carbonmind Music Publishing.
         </p>
         <div className="flex items-center gap-4">

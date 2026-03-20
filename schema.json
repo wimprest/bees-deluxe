@@ -968,6 +968,13 @@
         },
         "optional": true
       },
+      "photoUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "isCurrentMember": {
         "type": "objectAttribute",
         "value": {

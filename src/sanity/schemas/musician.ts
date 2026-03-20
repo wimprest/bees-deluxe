@@ -40,6 +40,12 @@ export const musician = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "photoUrl",
+      title: "Photo URL",
+      description: "Direct Cloudinary URL — managed via admin image upload",
+      type: "url",
+    }),
+    defineField({
       name: "isCurrentMember",
       title: "Current Member",
       description: "true = Current Band, false = Special Guests & Friends",

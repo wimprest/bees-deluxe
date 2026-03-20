@@ -16,6 +16,7 @@ export const allMusiciansQuery = groq`
     bio,
     isCurrentMember,
     order,
+    photoUrl,
     photo {
       asset -> {
         _id,
