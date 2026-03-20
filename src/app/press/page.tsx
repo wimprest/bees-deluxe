@@ -47,29 +47,43 @@ export default async function PressPage() {
 
   return (
     <PageShell>
-      {/* Section 1 — Featured Photo */}
+      {/* Section 1 — Header */}
       <section className="py-16 pb-8">
         <SectionDivider label="Bees Deluxe Press" />
-        <div className="mt-12">
-          <Image
-            src="/images/press/press-photo.jpg"
-            alt="Bees Deluxe live performance"
-            width={960}
-            height={640}
-            className="w-full object-cover"
-          />
-        </div>
       </section>
 
-      {/* Section 2 — Quotes */}
+      {/* Section 2 — Photo right + quotes left, then two-column quotes below */}
       <section className="py-8">
-        <div className="columns-1 gap-8 md:columns-2">
-          {pressQuotes.map((quote) => (
-            <div key={quote._id} className="break-inside-avoid">
-              <PressQuote quote={quote} />
-            </div>
-          ))}
+        {/* Top: quotes beside photo on desktop */}
+        <div className="md:grid md:grid-cols-2 md:gap-8">
+          {/* Photo — shown first on mobile, right column on desktop */}
+          <div className="order-1 mb-8 md:order-2 md:mb-0">
+            <Image
+              src="/images/press/press-photo.jpg"
+              alt="Bees Deluxe live performance"
+              width={480}
+              height={320}
+              className="w-full object-cover"
+            />
+          </div>
+          {/* First batch of quotes — left column */}
+          <div className="order-2 space-y-6 md:order-1">
+            {pressQuotes.slice(0, 6).map((quote) => (
+              <PressQuote key={quote._id} quote={quote} />
+            ))}
+          </div>
         </div>
+
+        {/* Remaining quotes — two columns below the photo */}
+        {pressQuotes.length > 6 && (
+          <div className="mt-8 columns-1 gap-8 md:columns-2">
+            {pressQuotes.slice(6).map((quote) => (
+              <div key={quote._id} className="break-inside-avoid">
+                <PressQuote quote={quote} />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Section 3 — Media Inquiry CTA */}
