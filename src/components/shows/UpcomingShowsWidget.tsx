@@ -67,7 +67,6 @@ export function UpcomingShowsWidget({
             <div className="flex items-center justify-between">
               <p className="text-sm text-brand-muted">{show.startTime}</p>
               <div className="flex items-center gap-3">
-                <AddToCalendar show={show} />
                 {show.ticketUrl && (
                   <a
                     href={show.ticketUrl}
@@ -78,6 +77,7 @@ export function UpcomingShowsWidget({
                     Buy Tickets &rarr;
                   </a>
                 )}
+                <AddToCalendar show={show} />
               </div>
             </div>
           </div>
