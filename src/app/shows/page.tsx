@@ -2,7 +2,9 @@ import Image from "next/image";
 import { client } from "@/lib/sanity";
 import { allShowsQuery } from "@/lib/queries";
 import { PageShell } from "@/components/layout/PageShell";
+import { SectionDivider } from "@/components/layout/SectionDivider";
 import { ShowListItem } from "@/components/shows/ShowListItem";
+import { PastShowsAccordion } from "@/components/shows/PastShowsAccordion";
 import type { Show } from "@/types";
 
 export default async function ShowsPage() {
@@ -17,6 +19,9 @@ export default async function ShowsPage() {
   const upcomingShows = allShows.filter(
     (show) => show.date && new Date(show.date) >= now
   );
+  const pastShows = allShows
+    .filter((show) => show.date && new Date(show.date) < now)
+    .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime());
 
   return (
     <PageShell>
@@ -32,6 +37,7 @@ export default async function ShowsPage() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_380px]">
           {/* Left column — show listing */}
           <div>
+            {/* Upcoming shows */}
             {upcomingShows.length > 0 ? (
               <div>
                 {upcomingShows.map((show, index) => (
@@ -48,9 +54,19 @@ export default async function ShowsPage() {
                 Check back for upcoming shows.
               </p>
             )}
+
+            {/* Past shows accordion */}
+            {pastShows.length > 0 && (
+              <>
+                <div className="mt-12">
+                  <SectionDivider label="Past Shows" />
+                </div>
+                <PastShowsAccordion shows={pastShows} />
+              </>
+            )}
           </div>
 
-          {/* Right column — Conrad silo, anchored ~2-3px below rule, desktop only */}
+          {/* Right column — Conrad silo, anchored below rule, desktop only */}
           <div className="hidden lg:-mt-[30px] lg:block">
             <Image
               src="/images/shows/shows-hero.jpg"
