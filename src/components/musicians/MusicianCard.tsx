@@ -20,6 +20,7 @@ interface MusicianCardProps {
     } | null;
   };
   index: number;
+  onClick?: () => void;
 }
 
 function getInitials(name: string): string {
@@ -36,7 +37,7 @@ function truncateBio(bio: string, sentences: number): string {
   return parts.slice(0, sentences).join(". ") + ".";
 }
 
-export function MusicianCard({ musician, index }: MusicianCardProps) {
+export function MusicianCard({ musician, index, onClick }: MusicianCardProps) {
   const [expanded, setExpanded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
@@ -53,6 +54,8 @@ export function MusicianCard({ musician, index }: MusicianCardProps) {
       initial={{ opacity: 0, x: -40 }}
       animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
       transition={{ duration: 0.4, delay: 0.25 + index * 0.1 }}
+      onClick={onClick}
+      className={onClick ? "cursor-pointer" : undefined}
     >
       {/* Photo or placeholder */}
       {photoUrl ? (
@@ -97,7 +100,10 @@ export function MusicianCard({ musician, index }: MusicianCardProps) {
             </p>
             {needsTruncation && (
               <button
-                onClick={() => setExpanded(!expanded)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setExpanded(!expanded);
+                }}
                 className="mt-1 text-xs text-brand-white/70"
               >
                 {expanded ? "Read less" : "Read more"}
