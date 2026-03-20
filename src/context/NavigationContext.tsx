@@ -5,7 +5,6 @@ import {
   useContext,
   useRef,
   useEffect,
-  useState,
   type ReactNode,
 } from "react";
 import { usePathname } from "next/navigation";
@@ -23,7 +22,6 @@ const NAV_INDEX: Record<string, number> = {
 };
 
 function getNavIndex(pathname: string): number {
-  // Exact match first, then check prefix for nested routes like /discs/[slug]
   if (pathname in NAV_INDEX) return NAV_INDEX[pathname];
   const prefix = "/" + pathname.split("/")[1];
   return NAV_INDEX[prefix] ?? 0;
@@ -43,20 +41,24 @@ export function useNavigationDirection() {
 
 export function NavigationProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const prevIndexRef = useRef(getNavIndex(pathname));
-  const [direction, setDirection] = useState(1);
+  const prevPathRef = useRef(pathname);
+  const directionRef = useRef(1);
 
-  useEffect(() => {
+  // Compute direction synchronously, but compare against the PREVIOUS pathname
+  // not the previous index — this prevents double-render issues
+  if (pathname !== prevPathRef.current) {
+    const prevIndex = getNavIndex(prevPathRef.current);
     const currentIndex = getNavIndex(pathname);
-    const prev = prevIndexRef.current;
-    if (currentIndex !== prev) {
-      setDirection(currentIndex > prev ? 1 : -1);
-      prevIndexRef.current = currentIndex;
-    }
+    directionRef.current = currentIndex >= prevIndex ? 1 : -1;
+  }
+
+  // Update the prev path ref AFTER the render commits, not during render
+  useEffect(() => {
+    prevPathRef.current = pathname;
   }, [pathname]);
 
   return (
-    <NavigationContext.Provider value={{ direction }}>
+    <NavigationContext.Provider value={{ direction: directionRef.current }}>
       {children}
     </NavigationContext.Provider>
   );

@@ -37,3 +37,8 @@ h1, h2, h3, h4, h5, h6 {
   border-top: 1px solid var(--color-brand-teal);
   opacity: 0.3;
 }
+
+/* Prevent flash on page transition — framer-motion overrides inline */
+.page-transition-enter {
+  opacity: 0;
+}
