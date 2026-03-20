@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminFormField } from "@/components/admin/AdminFormField";
-import { createVideo, updateVideo } from "./actions";
+import { createVideo, updateVideo, deleteVideo } from "./actions";
 
 interface VideoFormProps {
   video?: { _id: string; title?: string; youtubeId?: string; description?: string; featured?: boolean; order?: number };
@@ -45,9 +45,24 @@ export function VideoForm({ video }: VideoFormProps) {
         <input type="checkbox" id="featured" name="featured" defaultChecked={video?.featured} className="accent-brand-teal" />
         <label htmlFor="featured" className="text-sm text-brand-white">Featured (full-width on videos page)</label>
       </div>
-      <button type="submit" className="bg-brand-teal px-8 py-3 font-heading uppercase tracking-widest text-brand-black hover:bg-brand-teal-dark">
-        {isEdit ? "Update Video" : "Add Video"}
-      </button>
+      <div className="flex items-center justify-between">
+        <button type="submit" className="bg-brand-teal px-8 py-3 font-heading uppercase tracking-widest text-brand-black hover:bg-brand-teal-dark">
+          {isEdit ? "Update Video" : "Add Video"}
+        </button>
+        {isEdit && (
+          <button
+            type="button"
+            onClick={async () => {
+              if (!confirm("Are you sure you want to delete this video?")) return;
+              await deleteVideo(video!._id);
+              router.push("/admin/videos");
+            }}
+            className="bg-brand-red px-6 py-3 font-heading text-sm uppercase tracking-widest text-brand-white hover:opacity-80"
+          >
+            Delete Video
+          </button>
+        )}
+      </div>
     </form>
   );
 }
