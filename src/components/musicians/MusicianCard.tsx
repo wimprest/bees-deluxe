@@ -59,11 +59,11 @@ export function MusicianCard({ musician, index }: MusicianCardProps) {
           src={photoUrl}
           alt={name}
           width={400}
-          height={400}
-          className="aspect-square w-full object-cover"
+          height={600}
+          className="h-auto w-full object-cover"
         />
       ) : (
-        <div className="flex aspect-square w-full items-center justify-center bg-brand-charcoal">
+        <div className="flex aspect-[3/4] w-full items-center justify-center bg-brand-charcoal">
           <span className="font-heading text-3xl text-brand-teal">
             {getInitials(name)}
           </span>
