@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { client } from "@/lib/sanity";
 import { groq } from "next-sanity";
-import { DeleteShowButton } from "./DeleteShowButton";
+import { AdminShowsList } from "./AdminShowsList";
 
 const allShowsAdmin = groq`
   *[_type == "show"] | order(date desc) {
@@ -13,7 +13,6 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminShowsPage() {
   const shows = await client.fetch(allShowsAdmin);
-  const now = new Date();
 
   return (
     <div>
@@ -29,49 +28,7 @@ export default async function AdminShowsPage() {
         </Link>
       </div>
 
-      <div className="mt-6 space-y-1">
-        {shows.map(
-          (show: {
-            _id: string;
-            date: string;
-            venueName: string;
-            city: string;
-            state: string;
-          }) => {
-            const isPast = new Date(show.date) < now;
-            return (
-              <div
-                key={show._id}
-                className={`flex items-center justify-between border-b border-brand-teal/10 py-3 ${
-                  isPast ? "opacity-40" : ""
-                }`}
-              >
-                <div>
-                  <p className="text-sm text-brand-white">
-                    {new Date(show.date).toLocaleDateString("en-US", {
-                      weekday: "short",
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                    {" — "}
-                    {show.venueName}, {show.city}, {show.state}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Link
-                    href={`/admin/shows/${show._id}`}
-                    className="text-xs text-brand-teal hover:text-brand-teal-light"
-                  >
-                    Edit
-                  </Link>
-                  <DeleteShowButton id={show._id} />
-                </div>
-              </div>
-            );
-          }
-        )}
-      </div>
+      <AdminShowsList shows={shows} />
     </div>
   );
 }
