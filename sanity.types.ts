@@ -33,6 +33,7 @@ export type SiteSettings = {
       | "Instagram"
       | "SoundCloud"
       | "Twitter"
+      | "TikTok"
       | "Spotify";
     url?: string;
     _key: string;
@@ -179,6 +180,7 @@ export type Musician = {
   bio?: string;
   order?: number;
   photoUrl?: string;
+  showRole?: boolean;
   isCurrentMember?: boolean;
 };
 
@@ -363,16 +365,6 @@ export type UpcomingShowsQueryResult = Array<{
   state: string | null;
 }>;
 
-// Source: src/app/admin/press/page.tsx
-// Variable: pressAdmin
-// Query: *[_type == "pressQuote"] | order(order asc) { _id, quote, attribution, order }
-export type PressAdminResult = Array<{
-  _id: string;
-  quote: string | null;
-  attribution: string | null;
-  order: number | null;
-}>;
-
 // Source: src/app/admin/shows/[id]/page.tsx
 // Variable: showByIdQuery
 // Query: *[_type == "show" && _id == $id][0]
@@ -404,17 +396,6 @@ export type AllShowsAdminResult = Array<{
   state: string | null;
 }>;
 
-// Source: src/app/admin/videos/page.tsx
-// Variable: videosAdmin
-// Query: *[_type == "video"] | order(featured desc, order asc) { _id, title, youtubeId, featured, order }
-export type VideosAdminResult = Array<{
-  _id: string;
-  title: string | null;
-  youtubeId: string | null;
-  featured: boolean | null;
-  order: number | null;
-}>;
-
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -423,9 +404,7 @@ declare module "@sanity/client" {
     '*[_type == "musician"] | order(isCurrentMember desc, order asc) { _id, name, role, isCurrentMember, order }': MusiciansAdminResult;
     '{\n  "shows": count(*[_type == "show" && date >= now()]),\n  "albums": count(*[_type == "album"]),\n  "musicians": count(*[_type == "musician"]),\n  "press": count(*[_type == "pressQuote"]),\n  "photos": count(*[_type == "photo"]),\n  "videos": count(*[_type == "video"])\n}': CountsQueryResult;
     '\n  *[_type == "show" && date >= now()] | order(date asc) [0...3] {\n    _id, date, venueName, city, state\n  }\n': UpcomingShowsQueryResult;
-    '*[_type == "pressQuote"] | order(order asc) { _id, quote, attribution, order }': PressAdminResult;
     '*[_type == "show" && _id == $id][0]': ShowByIdQueryResult;
     '\n  *[_type == "show"] | order(date desc) {\n    _id, date, venueName, city, state\n  }\n': AllShowsAdminResult;
-    '*[_type == "video"] | order(featured desc, order asc) { _id, title, youtubeId, featured, order }': VideosAdminResult;
   }
 }

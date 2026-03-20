@@ -13,6 +13,7 @@ export const allMusiciansQuery = groq`
     _id,
     name,
     role,
+    showRole,
     bio,
     isCurrentMember,
     order,

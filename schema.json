@@ -103,6 +103,10 @@
                     },
                     {
                       "type": "string",
+                      "value": "TikTok"
+                    },
+                    {
+                      "type": "string",
                       "value": "Spotify"
                     }
                   ]
@@ -972,6 +976,13 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
+        },
+        "optional": true
+      },
+      "showRole": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
         },
         "optional": true
       },

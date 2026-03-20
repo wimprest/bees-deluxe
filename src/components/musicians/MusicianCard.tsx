@@ -9,6 +9,7 @@ interface MusicianCardProps {
     _id: string;
     name?: string;
     role?: string;
+    showRole?: boolean;
     bio?: string;
     photoUrl?: string;
     photo?: {
@@ -75,10 +76,12 @@ export function MusicianCard({ musician, index }: MusicianCardProps) {
         {/* Name */}
         <h3 className="font-heading text-xl text-brand-white">{name}</h3>
 
-        {/* Role */}
-        <p className="text-sm uppercase tracking-wide text-brand-white">
-          {musician.role}
-        </p>
+        {/* Role — only shown when showRole is true */}
+        {musician.showRole && (
+          <p className="text-sm uppercase tracking-wide text-brand-white">
+            {musician.role}
+          </p>
+        )}
 
         {/* Bio — desktop: full, mobile: truncated */}
         <div className="mt-2">

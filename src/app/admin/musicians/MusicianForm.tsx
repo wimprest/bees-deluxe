@@ -11,6 +11,7 @@ interface MusicianFormProps {
     _id: string;
     name?: string;
     role?: string;
+    showRole?: boolean;
     bio?: string;
     isCurrentMember?: boolean;
     order?: number;
@@ -72,7 +73,15 @@ export function MusicianForm({ musician }: MusicianFormProps) {
         </div>
       </div>
 
-      <AdminFormField label="Role" name="role" defaultValue={musician?.role} placeholder='e.g. "Guitar & Vocals"' required />
+      <div className="flex items-end gap-4">
+        <div className="flex-1">
+          <AdminFormField label="Role" name="role" defaultValue={musician?.role} placeholder='e.g. "Guitar & Vocals"' required />
+        </div>
+        <div className="flex items-center gap-2 pb-3">
+          <input type="checkbox" id="showRole" name="showRole" defaultChecked={musician?.showRole ?? false} className="accent-brand-teal" />
+          <label htmlFor="showRole" className="text-sm text-brand-white whitespace-nowrap">Show on site</label>
+        </div>
+      </div>
 
       {/* Photo upload */}
       <div>

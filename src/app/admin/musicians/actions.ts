@@ -8,6 +8,7 @@ export async function createMusician(formData: FormData) {
     _type: "musician",
     name: formData.get("name") as string,
     role: formData.get("role") as string,
+    showRole: formData.get("showRole") === "on",
     bio: formData.get("bio") as string,
     photoUrl: (formData.get("photoUrl") as string) || undefined,
     isCurrentMember: formData.get("isCurrentMember") === "on",
@@ -21,6 +22,7 @@ export async function updateMusician(id: string, formData: FormData) {
   await writeClient.patch(id).set({
     name: formData.get("name") as string,
     role: formData.get("role") as string,
+    showRole: formData.get("showRole") === "on",
     bio: formData.get("bio") as string,
     photoUrl: (formData.get("photoUrl") as string) || undefined,
     isCurrentMember: formData.get("isCurrentMember") === "on",

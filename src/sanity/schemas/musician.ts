@@ -46,6 +46,13 @@ export const musician = defineType({
       type: "url",
     }),
     defineField({
+      name: "showRole",
+      title: "Show Role",
+      description: "Display the role on the public musicians page",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
       name: "isCurrentMember",
       title: "Current Member",
       description: "true = Current Band, false = Special Guests & Friends",
