@@ -35,3 +35,4 @@ Replace an existing Wix site that fails on mobile with a responsive, mobile-firs
 ### Tangential (Evaluate Later)
 - Mailing list / newsletter signup
 - Merch integration beyond current Printify link
+- Higher resolution merch t-shirt image
