@@ -116,9 +116,9 @@ export function AlbumDetail({ album, onClose }: AlbumDetailProps) {
 
           {/* Description */}
           {album.description && (
-            <p className="mt-4 text-sm leading-relaxed text-brand-white">
+            <div className="mt-4 whitespace-pre-line text-sm leading-relaxed text-brand-white">
               {album.description}
-            </p>
+            </div>
           )}
 
           {/* Tracklist */}
@@ -140,9 +140,9 @@ export function AlbumDetail({ album, onClose }: AlbumDetailProps) {
 
           {/* Credits */}
           {album.credits && (
-            <p className="mt-4 text-xs italic text-brand-muted">
+            <div className="mt-4 whitespace-pre-line text-xs italic text-brand-muted">
               {album.credits}
-            </p>
+            </div>
           )}
 
           {/* Press Quotes */}
@@ -155,9 +155,9 @@ export function AlbumDetail({ album, onClose }: AlbumDetailProps) {
                     key={quote._key}
                     className="border-l-2 border-brand-teal pl-4"
                   >
-                    <p className="text-sm italic leading-relaxed text-brand-white">
+                    <div className="whitespace-pre-line text-sm italic leading-relaxed text-brand-white">
                       &ldquo;{quote.quote}&rdquo;
-                    </p>
+                    </div>
                     <p className="mt-1 text-xs text-brand-muted">
                       —{" "}
                       <span className="font-bold text-brand-white">
