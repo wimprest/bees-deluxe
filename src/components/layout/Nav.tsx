@@ -39,9 +39,9 @@ export function Nav() {
           <Image
             src="/images/bees-logo.png"
             alt="Bees Deluxe"
-            width={120}
-            height={40}
-            className="h-10 w-auto"
+            width={180}
+            height={60}
+            className="h-[60px] w-auto"
             priority
           />
         </Link>
