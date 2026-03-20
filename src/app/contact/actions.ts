@@ -14,8 +14,8 @@ export async function submitContactForm(
   const subject = formData.get("subject") as string;
   const message = formData.get("message") as string;
 
-  if (!name || !email || !subject || !message) {
-    return { success: false, error: "All fields are required." };
+  if (!name || !email) {
+    return { success: false, error: "Name and email are required." };
   }
 
   // Phase 10: log submission. Upgrade to Resend or similar in Phase 13.

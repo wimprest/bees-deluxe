@@ -10,8 +10,8 @@ export default function ContactPage() {
         {/* Left: Contact Form */}
         <ContactForm />
 
-        {/* Right: Contact Info */}
-        <div>
+        {/* Right: Contact Info — top padding aligns with first input field */}
+        <div className="md:pt-7">
           <p className="text-sm text-brand-white">
             Fill out this form and contact us regarding any questions or requests
             and we&rsquo;ll be happy to help you or contact below:

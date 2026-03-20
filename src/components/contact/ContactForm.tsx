@@ -68,7 +68,6 @@ export function ContactForm() {
           id="subject"
           name="subject"
           placeholder="Subject"
-          required
           className={inputStyles}
         />
       </div>
@@ -85,7 +84,6 @@ export function ContactForm() {
           name="message"
           rows={6}
           placeholder="Message"
-          required
           className={inputStyles}
         />
       </div>
