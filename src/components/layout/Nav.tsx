@@ -33,7 +33,7 @@ export function Nav() {
 
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-brand-teal/20 bg-brand-black">
-      <div className="mx-auto flex h-16 max-w-[960px] items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-[960px] items-center justify-between px-4 sm:px-6 md:h-24">
         {/* Logo */}
         <Link href="/" className="shrink-0">
           <Image

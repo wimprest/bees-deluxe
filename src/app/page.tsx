@@ -177,6 +177,15 @@ export default async function HomePage() {
                   {link.label}
                 </a>
               ))}
+              <a
+                href="https://www.beesdeluxe.com/hallucinate"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 text-sm text-brand-teal transition-colors hover:text-brand-teal-light"
+              >
+                <span className="font-bold">Order</span> your copy of
+                Hallucinate — the all-originals Bees Deluxe album.
+              </a>
             </div>
           </div>
         </PageShell>
