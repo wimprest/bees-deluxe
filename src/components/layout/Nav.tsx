@@ -39,9 +39,9 @@ export function Nav() {
           <Image
             src="/images/bees-logo.png"
             alt="Bees Deluxe"
-            width={180}
-            height={60}
-            className="h-[60px] w-auto"
+            width={270}
+            height={90}
+            className="h-[90px] w-auto"
             priority
           />
         </Link>
@@ -57,7 +57,7 @@ export function Nav() {
                 href={link.href}
                 className={`text-sm font-heading uppercase tracking-wide transition-colors hover:text-brand-teal ${
                   pathname === link.href
-                    ? "text-brand-teal"
+                    ? "text-brand-red"
                     : "text-brand-white"
                 }`}
               >
@@ -101,7 +101,7 @@ export function Nav() {
               onClick={() => setMobileOpen(false)}
               className={`block border-b border-brand-teal/10 px-4 py-3 text-sm font-heading uppercase tracking-wide transition-colors hover:text-brand-teal ${
                 pathname === link.href
-                  ? "text-brand-teal"
+                  ? "text-brand-red"
                   : "text-brand-white"
               }`}
             >

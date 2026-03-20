@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-teal: #00B4B4;
-  --color-brand-teal-dark: #008A8A;
-  --color-brand-teal-light: #00D4D4;
+  --color-brand-teal: #00DDDD;
+  --color-brand-teal-dark: #00AAAA;
+  --color-brand-teal-light: #00FFFF;
   --color-brand-black: #0A0A0A;
   --color-brand-charcoal: #141414;
   --color-brand-slate: #1E1E1E;
   --color-brand-white: #F5F5F5;
   --color-brand-muted: #9A9A9A;
-  --color-brand-rule: #00B4B4;
+  --color-brand-red: #E0003B;
+  --color-brand-rule: #00DDDD;
 
   --font-heading: var(--font-oswald);
   --font-body: var(--font-inter);
@@ -18,7 +19,7 @@
 
 :root {
   --gradient-hero: linear-gradient(180deg, #0A0A0A 0%, #141414 100%);
-  --gradient-teal-fade: linear-gradient(90deg, #00B4B4 0%, #008A8A 100%);
+  --gradient-teal-fade: linear-gradient(90deg, #00DDDD 0%, #00AAAA 100%);
   --gradient-dark-surface: linear-gradient(135deg, #141414 0%, #1E1E1E 100%);
 }
 

@@ -27,7 +27,7 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Section 1: Hero — Correction 1: quote above, image below full-width */}
+      {/* Section 1: Hero */}
       <section
         className="w-full py-16 sm:py-20"
         style={{ background: "var(--gradient-hero)" }}
@@ -86,85 +86,7 @@ export default async function HomePage() {
         </PageShell>
       </section>
 
-      {/* Section 3: Hallucinate — Correction 4: no SectionDivider, three-column, teal label */}
-      <section className="py-16 sm:py-20">
-        <PageShell>
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
-            {/* Left: cover */}
-            <div className="flex-shrink-0 lg:w-[30%]">
-              <Image
-                src="/images/home/hallucinate-cover.jpg"
-                alt="Hallucinate album cover"
-                width={600}
-                height={600}
-                className="aspect-square h-auto w-full object-cover"
-              />
-            </div>
-
-            {/* Center: review */}
-            <div className="flex flex-1 flex-col justify-center">
-              <p className="text-sm font-bold uppercase tracking-widest text-brand-teal">
-                Hallucinate Review
-              </p>
-              <p className="mt-4 font-body text-lg italic leading-relaxed text-brand-white">
-                &ldquo;Hallucinate is one of those albums that come along very
-                infrequently, a complete outline of musical genius, songs that
-                have substance not only individually, but as an entire album,
-                like one lone and complete song, no matter where you are in the
-                album, it evolves and transforms into something grand and
-                magical.&rdquo;
-              </p>
-              {/* Correction 7: reviewer bold white, publication muted */}
-              <p className="mt-2 text-sm text-brand-muted">
-                — <span className="font-bold text-brand-white">Joseph Timmons</span>,{" "}
-                Indie Pulse Reviews
-              </p>
-            </div>
-
-            {/* Right: buy links */}
-            <div className="flex flex-col gap-2 lg:w-[20%]">
-              {HALLUCINATE_LINKS.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-brand-teal transition-colors hover:text-brand-teal-light"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        </PageShell>
-      </section>
-
-      {/* Section 4: YouTube Video — Correction 5: new section */}
-      <section className="py-16 sm:py-20">
-        <PageShell>
-          <div className="aspect-video w-full">
-            <iframe
-              src="https://www.youtube.com/embed/WSUWKOIGip0"
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-              title="Bees Deluxe video"
-              className="h-full w-full"
-            />
-          </div>
-          <Link
-            href="/videos"
-            className="mt-4 inline-block font-heading text-sm uppercase tracking-wide text-brand-teal transition-colors hover:text-brand-teal-light"
-          >
-            More Bees Deluxe Videos on YouTube &rarr;
-          </Link>
-        </PageShell>
-      </section>
-
-      {/* Section 5: Spotify + Shows side by side — Correction 3 */}
+      {/* Section 3: Spotify + Shows side by side (Correction 1: moved above Hallucinate) */}
       <section className="py-16 sm:py-20">
         <PageShell>
           <div className="flex flex-col-reverse gap-8 lg:flex-row lg:gap-12">
@@ -198,7 +120,94 @@ export default async function HomePage() {
         </PageShell>
       </section>
 
-      {/* Section 6: Merch + Press Quote side by side — Correction 6 */}
+      {/* Section 4: Hallucinate Review (Correction 2: SectionDivider + title changes) */}
+      <section className="py-16 sm:py-20">
+        <PageShell>
+          <SectionDivider label="Hallucinate Review" />
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
+            {/* Left: cover + title */}
+            <div className="flex-shrink-0 lg:w-[30%]">
+              <Image
+                src="/images/home/hallucinate-cover.jpg"
+                alt="Hallucinate album cover"
+                width={600}
+                height={600}
+                className="aspect-square h-auto w-full object-cover"
+              />
+              {/* Correction 3: brand.red on HALLUCINATE title */}
+              <p className="mt-3 text-sm font-bold uppercase tracking-widest text-brand-red">
+                Hallucinate
+              </p>
+            </div>
+
+            {/* Center: review */}
+            <div className="flex flex-1 flex-col justify-center">
+              <p className="font-body text-lg italic leading-relaxed text-brand-white">
+                &ldquo;Hallucinate is one of those albums that come along very
+                infrequently, a complete outline of musical genius, songs that
+                have substance not only individually, but as an entire album,
+                like one lone and complete song, no matter where you are in the
+                album, it evolves and transforms into something grand and
+                magical.&rdquo;
+              </p>
+              {/* Correction 4: Indie Pulse Reviews linked */}
+              <p className="mt-2 text-sm text-brand-muted">
+                — <span className="font-bold text-brand-white">Joseph Timmons</span>,{" "}
+                <a
+                  href="https://indiepulsemusic.com/2023/12/02/indiepulse-reviews-hallucinate-the-new-album-of-all-original-tracks-by-bees-deluxe/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brand-muted transition-colors hover:text-brand-teal"
+                >
+                  Indie Pulse Reviews
+                </a>
+              </p>
+            </div>
+
+            {/* Right: buy links */}
+            <div className="flex flex-col gap-2 lg:w-[20%]">
+              {HALLUCINATE_LINKS.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-brand-teal transition-colors hover:text-brand-teal-light"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </PageShell>
+      </section>
+
+      {/* Section 5: YouTube Video */}
+      <section className="py-16 sm:py-20">
+        <PageShell>
+          <div className="aspect-video w-full">
+            <iframe
+              src="https://www.youtube.com/embed/WSUWKOIGip0"
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+              title="Bees Deluxe video"
+              className="h-full w-full"
+            />
+          </div>
+          <Link
+            href="/videos"
+            className="mt-4 inline-block font-heading text-sm uppercase tracking-wide text-brand-teal transition-colors hover:text-brand-teal-light"
+          >
+            More Bees Deluxe Videos on YouTube &rarr;
+          </Link>
+        </PageShell>
+      </section>
+
+      {/* Section 6: Merch + Press Quote side by side */}
       <section className="py-16 sm:py-20">
         <PageShell>
           <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
@@ -206,14 +215,14 @@ export default async function HomePage() {
             <div className="flex flex-col gap-4 lg:w-1/2">
               <SectionDivider label="Merch" />
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-                {/* Correction 9: charcoal background to soften white t-shirt image */}
-                <div className="flex-shrink-0 bg-brand-charcoal sm:w-[200px]">
+                {/* Correction 5: plain image, no blend modes or bg manipulation */}
+                <div className="flex-shrink-0 sm:w-[200px]">
                   <Image
                     src="/images/home/merch-tshirt.jpg"
                     alt="Bees Deluxe t-shirt"
                     width={400}
                     height={400}
-                    className="h-auto w-full object-cover mix-blend-multiply"
+                    className="h-auto w-full object-cover"
                   />
                 </div>
                 <div>
@@ -234,7 +243,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right: Press Quote — Correction 7: reviewer bold white */}
+            {/* Right: Press Quote */}
             <div className="flex items-center lg:w-1/2">
               <blockquote className="border-l-2 border-brand-teal py-8 pl-6">
                 <p className="font-body text-lg italic leading-relaxed text-brand-white">
