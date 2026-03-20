@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm px-4">
         <div className="mb-8 flex justify-center">
           <Image
-            src="/images/bees-logo.png"
+            src="/images/bees-logo-transparent.png"
             alt="Bees Deluxe"
             width={180}
             height={60}

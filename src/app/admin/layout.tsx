@@ -44,7 +44,7 @@ export default function AdminLayout({
         <div className="flex h-full flex-col p-4">
           <Link href="/admin" className="mb-6">
             <Image
-              src="/images/bees-logo.png"
+              src="/images/bees-logo-transparent.png"
               alt="Bees Deluxe"
               width={120}
               height={40}
