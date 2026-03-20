@@ -10,30 +10,57 @@ export default function ContactPage() {
         {/* Left: Contact Form */}
         <ContactForm />
 
-        {/* Right: Booking Info */}
+        {/* Right: Contact Info */}
         <div>
-          <p className="text-sm uppercase tracking-widest text-brand-teal">
-            Booking
+          <p className="text-sm text-brand-white">
+            Fill out this form and contact us regarding any questions or requests
+            and we&rsquo;ll be happy to help you or contact below:
           </p>
-          <p className="mt-4 font-heading text-lg text-brand-white">
-            Steve Gaetz
-          </p>
-          <a
-            href="mailto:stevebigcrush@gmail.com"
-            className="mt-1 block text-brand-teal transition-colors hover:text-brand-teal-light"
-          >
-            stevebigcrush@gmail.com
-          </a>
-          <a
-            href="tel:9785375111"
-            className="mt-1 block text-brand-teal transition-colors hover:text-brand-teal-light"
-          >
-            978-537-5111
-          </a>
-          <p className="mt-6 text-sm text-brand-muted">
-            For press inquiries, interview requests, or review copies, use the
-            contact form and include your publication credentials.
-          </p>
+
+          {/* Press & Media */}
+          <div className="mt-6">
+            <p className="font-heading text-base font-bold text-brand-white">
+              Press &amp; Media
+            </p>
+            <p className="mt-1 text-sm text-brand-white">Carol Band</p>
+            <p className="text-sm text-brand-white">(617) 969 0334</p>
+            <a
+              href="mailto:carol@carolband.com"
+              className="text-sm text-brand-teal transition-colors hover:text-brand-teal-light"
+            >
+              carol@carolband.com
+            </a>
+          </div>
+
+          {/* Booking */}
+          <div className="mt-6">
+            <p className="font-heading text-base font-bold text-brand-white">
+              To book Bees Deluxe
+            </p>
+            <a
+              href="https://www.wellplayedmusic.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 block text-sm text-brand-teal transition-colors hover:text-brand-teal-light"
+            >
+              www.wellplayedmusic.com
+            </a>
+          </div>
+
+          {/* Merch */}
+          <div className="mt-6">
+            <p className="font-heading text-base font-bold text-brand-white">
+              T Shirts + Caps = Merch
+            </p>
+            <a
+              href="https://bees-deluxe.printify.me/products"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 block text-sm text-brand-teal transition-colors hover:text-brand-teal-light"
+            >
+              bees-deluxe.printify.me/products
+            </a>
+          </div>
         </div>
       </div>
     </PageShell>

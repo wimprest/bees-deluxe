@@ -67,7 +67,7 @@ export function ContactForm() {
           type="text"
           id="subject"
           name="subject"
-          placeholder="Booking inquiry, press request, general question..."
+          placeholder="Subject"
           required
           className={inputStyles}
         />
@@ -84,7 +84,7 @@ export function ContactForm() {
           id="message"
           name="message"
           rows={6}
-          placeholder="Tell us what's on your mind. For booking inquiries, include your venue name, capacity, and preferred dates."
+          placeholder="Message"
           required
           className={inputStyles}
         />
