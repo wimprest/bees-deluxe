@@ -38,6 +38,11 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.3;
 }
 
+/* White calendar/date-picker icons on dark backgrounds */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
 /* Prevent flash on page transition — framer-motion overrides inline */
 .page-transition-enter {
   opacity: 0;
