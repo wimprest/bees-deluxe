@@ -43,10 +43,22 @@ export function ShowListItem({ show }: ShowListItemProps) {
         {show.city}, {show.state}
       </p>
 
-      {/* Line 4: Time + Calendar */}
+      {/* Line 4: Time + Calendar + Tickets */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-brand-muted">{show.startTime}</p>
-        <AddToCalendar show={show} />
+        <div className="flex items-center gap-3">
+          <AddToCalendar show={show} />
+          {show.ticketUrl && (
+            <a
+              href={show.ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs uppercase tracking-wide text-brand-red transition-colors hover:text-brand-teal"
+            >
+              Buy Tickets &rarr;
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Notes (conditional) */}

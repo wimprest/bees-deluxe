@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald, Inter, Courier_Prime } from "next/font/google";
 import { Nav } from "@/components/layout/Nav";
+import { SiteTagline } from "@/components/layout/SiteTagline";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
@@ -40,7 +41,10 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-brand-black text-brand-white font-body">
         <Nav />
-        <main className="flex-1 pt-16 md:pt-24">{children}</main>
+        <div className="pt-16 md:pt-24">
+          <SiteTagline />
+        </div>
+        <main className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>

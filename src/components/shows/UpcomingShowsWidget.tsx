@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { format } from "date-fns";
 import { generateGoogleMapsUrl } from "@/lib/maps";
+import { AddToCalendar } from "@/components/shows/AddToCalendar";
 import type { Show } from "@/types";
 
 interface UpcomingShowsWidgetProps {
@@ -62,8 +63,23 @@ export function UpcomingShowsWidget({
               {show.city}, {show.state}
             </p>
 
-            {/* Line 4: Start time */}
-            <p className="text-sm text-brand-muted">{show.startTime}</p>
+            {/* Line 4: Start time + Calendar + Tickets */}
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-brand-muted">{show.startTime}</p>
+              <div className="flex items-center gap-3">
+                <AddToCalendar show={show} />
+                {show.ticketUrl && (
+                  <a
+                    href={show.ticketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs uppercase tracking-wide text-brand-red transition-colors hover:text-brand-teal"
+                  >
+                    Buy Tickets &rarr;
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       ))}
