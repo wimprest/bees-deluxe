@@ -9,6 +9,20 @@ export async function updateSettings(formData: FormData) {
   // Find existing settings doc or create one
   const existing = await client.fetch(groq`*[_type == "siteSettings"][0]._id`);
 
+  // Parse social links from JSON
+  const socialLinksJson = formData.get("socialLinks") as string;
+  let socialLinks;
+  try {
+    const parsed = JSON.parse(socialLinksJson || "[]");
+    socialLinks = parsed.map((link: { platform: string; url: string }, i: number) => ({
+      _key: `social${i}`,
+      platform: link.platform,
+      url: link.url,
+    }));
+  } catch {
+    socialLinks = [];
+  }
+
   const data = {
     _type: "siteSettings" as const,
     heroQuote: formData.get("heroQuote") as string,
@@ -17,6 +31,7 @@ export async function updateSettings(formData: FormData) {
     bookingAgentName: (formData.get("bookingAgentName") as string) || undefined,
     bookingAgentEmail: (formData.get("bookingAgentEmail") as string) || undefined,
     bookingAgentPhone: (formData.get("bookingAgentPhone") as string) || undefined,
+    socialLinks,
   };
 
   if (existing) {
