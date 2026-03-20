@@ -9,7 +9,20 @@ export const allShowsQuery = groq`
 `;
 
 export const allMusiciansQuery = groq`
-  *[_type == "musician"] | order(isCurrentMember desc, order asc)
+  *[_type == "musician"] | order(isCurrentMember desc, order asc) {
+    _id,
+    name,
+    role,
+    bio,
+    isCurrentMember,
+    order,
+    photo {
+      asset -> {
+        _id,
+        url
+      }
+    }
+  }
 `;
 
 export const allAlbumsQuery = groq`

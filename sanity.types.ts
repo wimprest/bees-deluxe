@@ -358,25 +358,20 @@ export type AllShowsQueryResult = Array<{
 
 // Source: src/lib/queries.ts
 // Variable: allMusiciansQuery
-// Query: *[_type == "musician"] | order(isCurrentMember desc, order asc)
+// Query: *[_type == "musician"] | order(isCurrentMember desc, order asc) {    _id,    name,    role,    bio,    isCurrentMember,    order,    photo {      asset -> {        _id,        url      }    }  }
 export type AllMusiciansQueryResult = Array<{
   _id: string;
-  _type: "musician";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  role?: string;
-  photo?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  bio?: string;
-  order?: number;
-  isCurrentMember?: boolean;
+  name: string | null;
+  role: string | null;
+  bio: string | null;
+  isCurrentMember: boolean | null;
+  order: number | null;
+  photo: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+  } | null;
 }>;
 
 // Source: src/lib/queries.ts
@@ -566,7 +561,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "show" && date >= now()] | order(date asc) [0...$limit]\n': UpcomingShowsQueryResult;
     '\n  *[_type == "show"] | order(date asc)\n': AllShowsQueryResult;
-    '\n  *[_type == "musician"] | order(isCurrentMember desc, order asc)\n': AllMusiciansQueryResult;
+    '\n  *[_type == "musician"] | order(isCurrentMember desc, order asc) {\n    _id,\n    name,\n    role,\n    bio,\n    isCurrentMember,\n    order,\n    photo {\n      asset -> {\n        _id,\n        url\n      }\n    }\n  }\n': AllMusiciansQueryResult;
     '\n  *[_type == "album"] | order(featured desc, order asc)\n': AllAlbumsQueryResult;
     '\n  *[_type == "album" && slug.current == $slug][0] {\n    ...,\n    pressQuotes[]\n  }\n': AlbumBySlugQueryResult;
     '\n  *[_type == "pressQuote"] | order(order asc)\n': AllPressQuotesQueryResult;
