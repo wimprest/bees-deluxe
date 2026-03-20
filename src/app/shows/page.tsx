@@ -51,7 +51,7 @@ export default async function ShowsPage() {
           </div>
 
           {/* Right column — Conrad silo, anchored ~2-3px below rule, desktop only */}
-          <div className="hidden lg:-mt-5 lg:block">
+          <div className="hidden lg:-mt-[30px] lg:block">
             <Image
               src="/images/shows/shows-hero.jpg"
               alt="Conrad Warre — Bees Deluxe"
